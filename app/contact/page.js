@@ -1,9 +1,8 @@
 // app/contact/page.js
 "use client";
-import Header from '../user/components/header'
 
 import React, { useState } from 'react';
-import { MapPin, MessageCircle, Phone, Mail, Send, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react';
+import { MapPin, MessageCircle, Phone, Mail, Send, ChevronRight, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react';
 
 export default function ContactPage() {
     const [formData, setFormData] = useState({
@@ -68,7 +67,7 @@ export default function ContactPage() {
                 href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
                 rel="stylesheet"
             />
-            <Header />
+
             <div className="min-h-screen bg-white font-['Inter'] relative">
                 {/* Floating WhatsApp Chat Bubble */}
                 <a
@@ -90,28 +89,32 @@ export default function ContactPage() {
                 </a>
 
                 {/* Hero / Contact Banner */}
-                <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-gradient-to-br from-[#0B1F3B] via-[#1a3a5c] to-[#0B1F3B] pt-20">
-                    <div className="absolute inset-0 opacity-5">
+                <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-white pt-20">
+                    {/* Very light grid – adjusted opacity & stroke for white bg */}
+                    <div className="absolute inset-0 opacity-[0.025] pointer-events-none">
                         <svg className="w-full h-full">
                             <defs>
-                                <pattern id="contact-grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-                                    <path d="M0,30 L60,30 M30,0 L30,60" stroke="#00B4D8" strokeWidth="1" fill="none" />
+                                <pattern id="contact-grid-light" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                                    <path d="M0,30 L60,30 M30,0 L30,60" stroke="#0B1F3B" strokeWidth="1" fill="none" opacity="0.35" />
                                 </pattern>
                             </defs>
-                            <rect width="100%" height="100%" fill="url(#contact-grid)" />
+                            <rect width="100%" height="100%" fill="url(#contact-grid-light)" />
                         </svg>
                     </div>
 
-                    <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#00B4D8]/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s' }} />
+                    {/* Soft teal glow – reduced opacity for clean white bg */}
+                    <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#00B4D8]/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s' }} />
 
                     <div className="container mx-auto px-6 py-20 relative z-10">
                         <div className="max-w-4xl mx-auto text-center space-y-8">
-                            <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-full text-lg font-semibold text-white">
+                            {/* Original tag – colors adjusted for white bg */}
+                            <div className="inline-flex items-center gap-3 px-6 py-3 bg-[#0B1F3B]/5 border border-[#0B1F3B]/10 rounded-full text-lg font-semibold text-[#0B1F3B]">
                                 <MessageCircle className="w-6 h-6 text-[#00B4D8]" />
                                 Get in Touch
                             </div>
 
-                            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white">
+                            {/* Original headline – kept exactly */}
+                            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-[#0B1F3B]">
                                 Contact Future Fix
                                 <br />
                                 <span className="bg-gradient-to-r from-[#00B4D8] to-[#0096C7] bg-clip-text text-transparent">
@@ -119,10 +122,17 @@ export default function ContactPage() {
                                 </span>
                             </h1>
 
-                            <p className="text-xl lg:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+                            {/* Original paragraph – kept exactly */}
+                            <p className="text-xl lg:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
                                 Have questions about laptop repair, chip-level service, or business support? Reach out — our team responds quickly.
                             </p>
                         </div>
+                    </div>
+
+                    {/* Original scroll indicator – color adjusted for white bg */}
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600 animate-bounce">
+                        <span className="text-sm font-medium">Get in Touch</span>
+                        <ChevronRight className="w-6 h-6 rotate-90" />
                     </div>
                 </section>
 

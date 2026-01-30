@@ -1,6 +1,6 @@
 // app/how-it-works/page.js
 "use client";
-import Header from '../user/components/header'
+
 import React, { useEffect, useRef } from 'react';
 import {
   Activity,
@@ -93,7 +93,6 @@ export default function HowItWorks() {
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
       />
-      <Header/>
 
       <div className="min-h-screen bg-white relative font-inter">
         {/* Floating WhatsApp Chat Bubble */}

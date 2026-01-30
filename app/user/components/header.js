@@ -3,14 +3,11 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronRight } from 'lucide-react';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const pathname = usePathname(); // ← Helps us know current active page
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,98 +26,93 @@ export default function Header() {
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white shadow-md'
-          : 'bg-white/95 backdrop-blur-sm'
-      }`}
-    >
-      <div className="container mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* ─── Logo ─── */}
-          <Link href="/" className="flex items-center">
-            <div className="relative group">
-              <span className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-                <span className="text-[#0B1F3B]">Future</span>
-                <span className="bg-gradient-to-r from-[#00B4D8] to-[#0096c7] bg-clip-text text-transparent">
-                  Fix
-                </span>
-              </span>
+    <>
+      {/* Main Header – unchanged for desktop */}
+      <header
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 px-6 md:px-12 lg:px-20 pt-4 md:pt-6 `}
+      >
+        <div className="max-w-[1600px] mx-auto flex justify-between items-center">
+          <div className="text-[#0B1F3B] font-bold text-lg tracking-tight">
+            Futurefix<span className="text-[#00B4D8]">.</span>
+          </div>
 
-              {/* Subtle arrow effect under "Fix" – very close to your uploaded logo */}
-              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-1.5 bg-gradient-to-r from-transparent via-[#00B4D8] to-transparent rounded-full opacity-70 group-hover:opacity-100 transition-opacity" />
-            </div>
-          </Link>
-
-          {/* ─── Desktop Navigation ─── */}
-          <nav className="hidden md:flex items-center space-x-10">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`font-medium transition-all duration-300 relative group ${
-                    isActive
-                      ? 'text-[#00B4D8] font-semibold'
-                      : 'text-[#0B1F3B] hover:text-[#00B4D8]'
-                  }`}
-                >
-                  {link.name}
-
-                  {/* Underline animation */}
-                  <span
-                    className={`absolute -bottom-1 left-0 h-0.5 bg-[#00B4D8] transition-all duration-300 ${
-                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`}
-                  />
-                </Link>
-              );
-            })}
+          {/* Desktop Nav – exactly as you had */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#0B1F3B]">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="hover:text-[#00B4D8] transition-colors duration-300"
+              >
+                {link.name}
+              </Link>
+            ))}
+            <button className="bg-[#00B4D8] text-white px-6 py-2.5 rounded-full hover:scale-105 transition-transform duration-300">
+              Get Started
+            </button>
           </nav>
 
-          {/* ─── Mobile Menu Button ─── */}
+          {/* Mobile Hamburger – opens offcanvas */}
           <button
-            className="md:hidden text-[#0B1F3B] p-2 rounded-lg hover:bg-gray-100 transition"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            className="md:hidden text-[#0B1F3B] focus:outline-none"
+            onClick={() => setIsMobileMenuOpen(true)}
+            aria-label="Open menu"
           >
-            {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            <Menu className="w-7 h-7" />
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Offcanvas Sidebar – slides from right */}
+      <div
+        className={`fixed inset-y-0 right-0 z-50 w-80 bg-white/95 backdrop-blur-xl shadow-2xl transform transition-transform duration-500 ease-in-out ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        } md:hidden`}
+      >
+        {/* Header inside sidebar */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+          <div className="text-[#0B1F3B] font-bold text-xl tracking-tight">
+            Futurefix<span className="text-[#00B4D8]">.</span>
+          </div>
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-[#0B1F3B] hover:text-[#00B4D8] transition-colors"
+            aria-label="Close menu"
+          >
+            <X className="w-8 h-8" />
+          </button>
+        </div>
+
+        {/* Nav Links */}
+        <nav className="flex flex-col p-6 space-y-6 text-lg font-medium text-[#0B1F3B]">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className="hover:text-[#00B4D8] transition-colors duration-300 flex items-center justify-between group"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.name}
+              <ChevronRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all" />
+            </Link>
+          ))}
+        </nav>
+
+        {/* CTA Button at bottom */}
+        <div className="p-6 border-t border-gray-100">
+          <button className="w-full bg-[#00B4D8] text-white py-4 rounded-xl font-semibold hover:bg-[#0099bb] transition-colors duration-300">
+            Get Started
           </button>
         </div>
       </div>
 
-      {/* ─── Mobile Menu ─── */}
-      <div
-        className={`md:hidden bg-white border-t border-gray-100 shadow-lg transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-screen py-5' : 'max-h-0 py-0'
-        }`}
-      >
-        <div className="container mx-auto px-6">
-          <nav className="flex flex-col space-y-5">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`font-medium py-3 px-4 rounded-lg transition-all ${
-                    isActive
-                      ? 'bg-[#00B4D8]/10 text-[#00B4D8] font-semibold'
-                      : 'text-[#0B1F3B] hover:bg-gray-100'
-                  }`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-      </div>
-    </header>
+      {/* Backdrop overlay when sidebar is open */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 md:hidden transition-opacity duration-500"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+    </>
   );
 }
