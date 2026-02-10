@@ -29,11 +29,11 @@ export default function Header() {
     <>
       {/* Main Header – unchanged for desktop */}
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 px-6 md:px-12 lg:px-20 pt-4 md:pt-6 `}
+        className={`fixed top-0 left-0 w-full bg-white/95 backdrop-blur-xl z-50 transition-all duration-500 px-6 md:px-12 lg:px-20 py-2 md:pt-6 `}
       >
         <div className="max-w-[1600px] mx-auto flex justify-between items-center">
           <div className="text-[#0B1F3B] font-bold text-lg tracking-tight">
-            Futurefix<span className="text-[#00B4D8]">.</span>
+            Future<span className="text-[#00B4D8]">fix</span>
           </div>
 
           {/* Desktop Nav – exactly as you had */}
@@ -72,7 +72,7 @@ export default function Header() {
         {/* Header inside sidebar */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <div className="text-[#0B1F3B] font-bold text-xl tracking-tight">
-            Futurefix<span className="text-[#00B4D8]">.</span>
+            Future<span className="text-[#00B4D8]">fix</span>
           </div>
           <button
             onClick={() => setIsMobileMenuOpen(false)}

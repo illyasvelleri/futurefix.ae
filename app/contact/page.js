@@ -1,419 +1,407 @@
 // app/contact/page.js
-"use client";
+'use client';
 
 import React, { useState } from 'react';
-import { MapPin, MessageCircle, Phone, Mail, Send, ChevronRight, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import {
+  MapPin,
+  MessageCircle,
+  Phone,
+  Mail,
+  Send,
+  ChevronRight,
+  CheckCircle2,
+  AlertCircle,
+  ArrowRight,
+} from 'lucide-react';
+
+// WhatsApp config
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+971556166465';
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER.replace('+', '')}?text=${encodeURIComponent(
+  'Hello Future Fix Team, I would like to get in touch regarding:'
+)}`;
 
 export default function ContactPage() {
-    const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: '',
+  });
+
+  const [status, setStatus] = useState({ type: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatus({ type: '', message: '' });
+
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus({
+        type: 'error',
+        message: 'Please fill in all required fields.',
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Simulate form submission (replace with real API call later)
+    setTimeout(() => {
+      setStatus({
+        type: 'success',
+        message: 'Thank you! Your message has been sent. We’ll get back to you soon.',
+      });
+      setFormData({
         name: '',
         email: '',
         phone: '',
         subject: '',
         message: '',
-    });
+      });
+      setIsSubmitting(false);
+    }, 1400);
+  };
 
-    const [status, setStatus] = useState({ type: '', message: '' });
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  return (
+    <div className="min-h-screen bg-[#0a0e17] text-gray-100 font-sans antialiased">
+      {/* Floating WhatsApp Button */}
+      <a
+        href={WHATSAPP_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 group"
+        aria-label="Chat with Future Fix on WhatsApp"
+      >
+        <div className="relative">
+          <div className="w-16 h-16 rounded-full bg-cyan-600 flex items-center justify-center shadow-2xl shadow-cyan-900/50 group-hover:scale-110 transition-transform">
+            <MessageCircle className="w-8 h-8 text-white" />
+          </div>
+          <div className="absolute -top-1 -right-1 bg-cyan-700 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">
+            Chat
+          </div>
+        </div>
+      </a>
 
-    // WhatsApp from .env with fallback
-    const WHATSAPP_NUMBER = process.env.WHATSAPP_NUMBER || '+971556166465';
-    const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER.replace('+', '')}?text=${encodeURIComponent(
-        'Hello Future Fix Team, I would like to get in touch regarding:'
-    )}`;
+      {/* Hero / Banner */}
+      <section className="relative pt-24 pb-32 md:pb-40 overflow-hidden">
+        {/* Glow background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-cyan-600/20 rounded-full blur-3xl opacity-40"></div>
+          <div className="absolute bottom-0 right-0 w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-3xl opacity-30"></div>
+        </div>
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="max-w-5xl mx-auto text-center space-y-10">
+            <div className="inline-flex items-center gap-3 px-7 py-3.5 bg-cyan-950/50 border border-cyan-800/40 rounded-full text-lg font-semibold text-cyan-400">
+              <MessageCircle className="w-6 h-6" />
+              Contact Us
+            </div>
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setStatus({ type: '', message: '' });
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight">
+              Get in Touch with
+              <br />
+              <span className="bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-500 bg-clip-text text-transparent">
+                Future Fix Team
+              </span>
+            </h1>
 
-        // Simple client-side validation
-        if (!formData.name || !formData.email || !formData.message) {
-            setStatus({
-                type: 'error',
-                message: 'Please fill in all required fields.',
-            });
-            setIsSubmitting(false);
-            return;
-        }
+            <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light">
+              Questions about laptop repair, motherboard service, data recovery or business support?  
+              We respond quickly — reach out anytime.
+            </p>
+          </div>
+        </div>
+      </section>
 
-        // Here you would normally send to backend / API route
-        // For demo: simulate success after 1.2s
-        setTimeout(() => {
-            setStatus({
-                type: 'success',
-                message: 'Thank you! Your message has been sent. We will get back to you soon.',
-            });
-            setFormData({
-                name: '',
-                email: '',
-                phone: '',
-                subject: '',
-                message: '',
-            });
-            setIsSubmitting(false);
-        }, 1200);
-    };
+      {/* Main Contact Section */}
+      <section className="py-20 md:py-28">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 max-w-6xl mx-auto">
+            {/* Left: Contact Info */}
+            <div className="space-y-12">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
+                  Let's Connect
+                </h2>
+                <p className="text-xl text-gray-300 leading-relaxed">
+                  Whether it's urgent device repair or corporate fleet support — our team is here to help.
+                </p>
+              </div>
 
-    return (
-        <>
-            {/* Inter font — consistent with brand logo style */}
-            <link
-                href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-                rel="stylesheet"
-            />
+              <div className="space-y-8">
+                {/* WhatsApp */}
+                <div className="flex items-start gap-6">
+                  <div className="w-14 h-14 bg-cyan-950/60 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-7 h-7 text-cyan-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2">WhatsApp (Fastest)</h3>
+                    <a
+                      href={WHATSAPP_LINK}
+                      className="text-cyan-400 hover:text-cyan-300 font-semibold text-xl transition-colors"
+                    >
+                      {WHATSAPP_NUMBER}
+                    </a>
+                    <p className="text-gray-400 mt-1">Quick replies • Send photos for instant assessment</p>
+                  </div>
+                </div>
 
-            <div className="min-h-screen bg-white font-['Inter'] relative">
-                {/* Floating WhatsApp Chat Bubble */}
+                {/* Phone */}
+                <div className="flex items-start gap-6">
+                  <div className="w-14 h-14 bg-cyan-950/60 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-7 h-7 text-cyan-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2">Phone</h3>
+                    <a
+                      href={`tel:${WHATSAPP_NUMBER}`}
+                      className="text-cyan-400 hover:text-cyan-300 font-semibold text-xl transition-colors"
+                    >
+                      {WHATSAPP_NUMBER}
+                    </a>
+                    <p className="text-gray-400 mt-1">Available during business hours</p>
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div className="flex items-start gap-6">
+                  <div className="w-14 h-14 bg-cyan-950/60 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-7 h-7 text-cyan-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2">Location</h3>
+                    <p className="text-gray-300 font-medium">Naif, Deira, Dubai</p>
+                    <p className="text-gray-400">United Arab Emirates</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Action Cards */}
+              <div className="grid sm:grid-cols-2 gap-6 pt-6">
                 <a
-                    href={WHATSAPP_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="fixed bottom-8 right-8 z-50 group"
-                    aria-label="Chat on WhatsApp"
+                  href={WHATSAPP_LINK}
+                  className="group p-7 bg-gray-900/40 border border-gray-800 rounded-2xl hover:border-cyan-600/60 hover:shadow-xl hover:shadow-cyan-950/30 transition-all"
                 >
-                    <div className="relative">
-                        <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-[#00B4D8] flex items-center justify-center shadow-2xl shadow-[#00B4D8]/40 group-hover:scale-110 transition-transform duration-300">
-                            <MessageCircle className="w-8 h-8 lg:w-10 lg:h-10 text-white" />
-                        </div>
-                        <div className="absolute inset-0 rounded-full border-4 border-[#00B4D8]/30 animate-ping" />
-                        <div className="absolute -top-2 -right-2 bg-[#0B1F3B] text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">
-                            Chat
-                        </div>
-                    </div>
+                  <div className="flex items-center gap-4 mb-4">
+                    <MessageCircle className="w-8 h-8 text-cyan-400" />
+                    <h4 className="text-xl font-bold text-white">Message on WhatsApp</h4>
+                  </div>
+                  <p className="text-gray-400 mb-4">Fastest way — send device photos for quick quote.</p>
+                  <span className="inline-flex items-center gap-2 text-cyan-400 font-semibold group-hover:text-cyan-300">
+                    Start Chat <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
                 </a>
 
-                {/* Hero / Contact Banner */}
-                <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-white pt-20">
-                    {/* Very light grid – adjusted opacity & stroke for white bg */}
-                    <div className="absolute inset-0 opacity-[0.025] pointer-events-none">
-                        <svg className="w-full h-full">
-                            <defs>
-                                <pattern id="contact-grid-light" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-                                    <path d="M0,30 L60,30 M30,0 L30,60" stroke="#0B1F3B" strokeWidth="1" fill="none" opacity="0.35" />
-                                </pattern>
-                            </defs>
-                            <rect width="100%" height="100%" fill="url(#contact-grid-light)" />
-                        </svg>
-                    </div>
-
-                    {/* Soft teal glow – reduced opacity for clean white bg */}
-                    <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#00B4D8]/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '10s' }} />
-
-                    <div className="container mx-auto px-6 py-20 relative z-10">
-                        <div className="max-w-4xl mx-auto text-center space-y-8">
-                            {/* Original tag – colors adjusted for white bg */}
-                            <div className="inline-flex items-center gap-3 px-6 py-3 bg-[#0B1F3B]/5 border border-[#0B1F3B]/10 rounded-full text-lg font-semibold text-[#0B1F3B]">
-                                <MessageCircle className="w-6 h-6 text-[#00B4D8]" />
-                                Get in Touch
-                            </div>
-
-                            {/* Original headline – kept exactly */}
-                            <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-[#0B1F3B]">
-                                Contact Future Fix
-                                <br />
-                                <span className="bg-gradient-to-r from-[#00B4D8] to-[#0096C7] bg-clip-text text-transparent">
-                                    We're Here to Help
-                                </span>
-                            </h1>
-
-                            {/* Original paragraph – kept exactly */}
-                            <p className="text-xl lg:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-                                Have questions about laptop repair, chip-level service, or business support? Reach out — our team responds quickly.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Original scroll indicator – color adjusted for white bg */}
-                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600 animate-bounce">
-                        <span className="text-sm font-medium">Get in Touch</span>
-                        <ChevronRight className="w-6 h-6 rotate-90" />
-                    </div>
-                </section>
-
-                {/* Main Contact Content */}
-                <section className="py-20 bg-white">
-                    <div className="container mx-auto px-6">
-                        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-                            {/* Left: Contact Info & WhatsApp */}
-                            <div className="space-y-10">
-                                <div>
-                                    <h2 className="text-3xl lg:text-4xl font-bold text-[#0B1F3B] mb-6">
-                                        Let's Connect
-                                    </h2>
-                                    <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                                        Whether you're an individual needing urgent laptop repair or a business looking for fleet support, we're ready to assist.
-                                    </p>
-                                </div>
-
-                                <div className="space-y-6">
-                                    <div className="flex items-start gap-5">
-                                        <div className="w-14 h-14 bg-[#00B4D8]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                                            <MessageCircle className="w-7 h-7 text-[#00B4D8]" />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-xl font-bold text-[#0B1F3B] mb-1">WhatsApp (Fastest Response)</h3>
-                                            <a
-                                                href={WHATSAPP_LINK}
-                                                className="text-[#00B4D8] hover:text-[#0096C7] font-semibold text-lg transition-colors"
-                                            >
-                                                {WHATSAPP_NUMBER}
-                                            </a>
-                                            <p className="text-gray-600 text-sm mt-1">Messages replied within minutes during business hours</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-start gap-5">
-                                        <div className="w-14 h-14 bg-[#00B4D8]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                                            <Phone className="w-7 h-7 text-[#00B4D8]" />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-xl font-bold text-[#0B1F3B] mb-1">Phone</h3>
-                                            <a
-                                                href={`tel:${WHATSAPP_NUMBER}`}
-                                                className="text-[#00B4D8] hover:text-[#0096C7] font-semibold text-lg transition-colors"
-                                            >
-                                                {WHATSAPP_NUMBER}
-                                            </a>
-                                            <p className="text-gray-600 text-sm mt-1">Available during business hours</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex items-start gap-5">
-                                        <div className="w-14 h-14 bg-[#00B4D8]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                                            <MapPin className="w-7 h-7 text-[#00B4D8]" />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-xl font-bold text-[#0B1F3B] mb-1">Location</h3>
-                                            <p className="text-gray-700 font-medium">NAIF, Deira, Dubai</p>
-                                            <p className="text-gray-600 text-sm">United Arab Emirates – Pin: 46701</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Quick CTA Cards */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6">
-                                    <a
-                                        href={WHATSAPP_LINK}
-                                        className="group p-6 bg-gradient-to-br from-[#00B4D8]/5 to-[#0096C7]/5 rounded-2xl border border-[#00B4D8]/20 hover:border-[#00B4D8] hover:shadow-xl transition-all"
-                                    >
-                                        <div className="flex items-center gap-4 mb-4">
-                                            <MessageCircle className="w-8 h-8 text-[#00B4D8]" />
-                                            <h4 className="text-xl font-bold text-[#0B1F3B]">Message on WhatsApp</h4>
-                                        </div>
-                                        <p className="text-gray-600 mb-4">Fastest way to get help — send photos of your device for quick assessment.</p>
-                                        <span className="inline-flex items-center gap-2 text-[#00B4D8] font-semibold group-hover:text-[#0096C7]">
-                                            Start Chat <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                        </span>
-                                    </a>
-
-                                    <div className="p-6 bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200">
-                                        <div className="flex items-center gap-4 mb-4">
-                                            <Phone className="w-8 h-8 text-[#00B4D8]" />
-                                            <h4 className="text-xl font-bold text-[#0B1F3B]">Call Us</h4>
-                                        </div>
-                                        <p className="text-gray-600 mb-4">Speak directly with a technician for immediate guidance.</p>
-                                        <a
-                                            href={`tel:${WHATSAPP_NUMBER}`}
-                                            className="inline-flex items-center gap-2 text-[#00B4D8] font-semibold hover:text-[#0096C7]"
-                                        >
-                                            {WHATSAPP_NUMBER} <ArrowRight className="w-5 h-5" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Right: Contact Form */}
-                            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 lg:p-10">
-                                <h2 className="text-3xl font-bold text-[#0B1F3B] mb-8">Send Us a Message</h2>
-
-                                <form onSubmit={handleSubmit} className="space-y-6">
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                                                Full Name *
-                                            </label>
-                                            <input
-                                                type="text"
-                                                id="name"
-                                                name="name"
-                                                value={formData.name}
-                                                onChange={handleChange}
-                                                required
-                                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#00B4D8] focus:ring-2 focus:ring-[#00B4D8]/20 outline-none transition-all"
-                                                placeholder="Your name"
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                                                Email Address *
-                                            </label>
-                                            <input
-                                                type="email"
-                                                id="email"
-                                                name="email"
-                                                value={formData.email}
-                                                onChange={handleChange}
-                                                required
-                                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#00B4D8] focus:ring-2 focus:ring-[#00B4D8]/20 outline-none transition-all"
-                                                placeholder="your@email.com"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                                            Phone Number
-                                        </label>
-                                        <input
-                                            type="tel"
-                                            id="phone"
-                                            name="phone"
-                                            value={formData.phone}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#00B4D8] focus:ring-2 focus:ring-[#00B4D8]/20 outline-none transition-all"
-                                            placeholder="+971 55 616 6465"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                                            Subject *
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="subject"
-                                            name="subject"
-                                            value={formData.subject}
-                                            onChange={handleChange}
-                                            required
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#00B4D8] focus:ring-2 focus:ring-[#00B4D8]/20 outline-none transition-all"
-                                            placeholder="e.g. MacBook Pro logic board issue"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                                            Your Message *
-                                        </label>
-                                        <textarea
-                                            id="message"
-                                            name="message"
-                                            value={formData.message}
-                                            onChange={handleChange}
-                                            required
-                                            rows={5}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#00B4D8] focus:ring-2 focus:ring-[#00B4D8]/20 outline-none transition-all resize-none"
-                                            placeholder="Describe your device issue, model, symptoms, or any questions..."
-                                        />
-                                    </div>
-
-                                    <button
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                        className={`w-full flex items-center justify-center gap-3 px-8 py-4 bg-[#00B4D8] hover:bg-[#0096C7] text-white font-bold text-lg rounded-xl shadow-lg shadow-[#00B4D8]/30 hover:shadow-xl transition-all hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed ${isSubmitting ? 'cursor-wait' : ''
-                                            }`}
-                                    >
-                                        {isSubmitting ? (
-                                            <>Sending...</>
-                                        ) : (
-                                            <>
-                                                Send Message
-                                                <Send className="w-5 h-5" />
-                                            </>
-                                        )}
-                                    </button>
-
-                                    {status.message && (
-                                        <div
-                                            className={`mt-4 p-4 rounded-xl flex items-center gap-3 ${status.type === 'success'
-                                                ? 'bg-green-50 text-green-800 border border-green-200'
-                                                : 'bg-red-50 text-red-800 border border-red-200'
-                                                }`}
-                                        >
-                                            {status.type === 'success' ? (
-                                                <CheckCircle2 className="w-6 h-6 text-green-600" />
-                                            ) : (
-                                                <AlertCircle className="w-6 h-6 text-red-600" />
-                                            )}
-                                            <p>{status.message}</p>
-                                        </div>
-                                    )}
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Footer */}
-                <footer className="py-16 bg-[#0B1F3B] border-t border-white/10">
-                    <div className="container mx-auto px-6">
-                        <div className="grid md:grid-cols-3 gap-10">
-                            <div>
-                                <h3 className="text-2xl font-bold text-white mb-4">Future Fix</h3>
-                                <p className="text-gray-400 mb-6">
-                                    Professional laptop repair and IT services in Dubai — extending device life through precision engineering.
-                                </p>
-                            </div>
-
-                            <div>
-                                <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
-                                <ul className="space-y-3 text-gray-400">
-                                    <li>
-                                        <a href="/" className="hover:text-[#00B4D8] transition-colors">
-                                            Home
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/services" className="hover:text-[#00B4D8] transition-colors">
-                                            Services
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/how-it-works" className="hover:text-[#00B4D8] transition-colors">
-                                            How It Works
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/about" className="hover:text-[#00B4D8] transition-colors">
-                                            About
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <h4 className="text-lg font-semibold text-white mb-4">Contact</h4>
-                                <ul className="space-y-3 text-gray-400">
-                                    <li className="flex items-center gap-2">
-                                        <MapPin className="w-5 h-5 text-[#00B4D8]" />
-                                        <span>NAIF, Deira, Dubai - Pin: 46701</span>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href={WHATSAPP_LINK}
-                                            className="hover:text-[#00B4D8] transition-colors flex items-center gap-2"
-                                        >
-                                            <MessageCircle className="w-5 h-5" />
-                                            {WHATSAPP_NUMBER}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div className="border-t border-white/10 mt-12 pt-8 text-center text-gray-400 text-sm">
-                            <p>© 2025 Future Fix. All rights reserved. Professional Repair Services in Dubai.</p>
-                        </div>
-                    </div>
-                </footer>
+                <div className="p-7 bg-gray-900/40 border border-gray-800 rounded-2xl">
+                  <div className="flex items-center gap-4 mb-4">
+                    <Phone className="w-8 h-8 text-cyan-400" />
+                    <h4 className="text-xl font-bold text-white">Call Us</h4>
+                  </div>
+                  <p className="text-gray-400 mb-4">Speak directly with a technician.</p>
+                  <a
+                    href={`tel:${WHATSAPP_NUMBER}`}
+                    className="inline-flex items-center gap-2 text-cyan-400 font-semibold hover:text-cyan-300"
+                  >
+                    {WHATSAPP_NUMBER} <ArrowRight className="w-5 h-5" />
+                  </a>
+                </div>
+              </div>
             </div>
-        </>
-    );
+
+            {/* Right: Contact Form */}
+            <div className="bg-gray-900/40 border border-gray-800 rounded-2xl p-8 lg:p-10 shadow-xl shadow-black/30">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-8">
+                Send a Message
+              </h2>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-2">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-5 py-4 bg-gray-950 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-cyan-600 focus:ring-2 focus:ring-cyan-900/30 outline-none transition-all"
+                      placeholder="Your name"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-2">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-5 py-4 bg-gray-950 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-cyan-600 focus:ring-2 focus:ring-cyan-900/30 outline-none transition-all"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-400 mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full px-5 py-4 bg-gray-950 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-cyan-600 focus:ring-2 focus:ring-cyan-900/30 outline-none transition-all"
+                    placeholder="+971 55 616 6465"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-400 mb-2">
+                    Subject *
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-5 py-4 bg-gray-950 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-cyan-600 focus:ring-2 focus:ring-cyan-900/30 outline-none transition-all"
+                    placeholder="e.g. MacBook Pro motherboard issue"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-2">
+                    Your Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    className="w-full px-5 py-4 bg-gray-950 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-cyan-600 focus:ring-2 focus:ring-cyan-900/30 outline-none transition-all resize-none"
+                    placeholder="Describe your device issue, model, symptoms, or any questions..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full flex items-center justify-center gap-3 px-8 py-5 bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-bold text-lg rounded-xl shadow-xl shadow-cyan-900/30 hover:shadow-2xl hover:scale-[1.02] transition-all disabled:opacity-60 disabled:cursor-not-allowed ${
+                    isSubmitting ? 'cursor-wait' : ''
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>Sending...</>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="w-6 h-6" />
+                    </>
+                  )}
+                </button>
+
+                {status.message && (
+                  <div
+                    className={`mt-4 p-5 rounded-xl flex items-center gap-4 border ${
+                      status.type === 'success'
+                        ? 'bg-green-950/40 border-green-800 text-green-300'
+                        : 'bg-red-950/40 border-red-800 text-red-300'
+                    }`}
+                  >
+                    {status.type === 'success' ? (
+                      <CheckCircle2 className="w-7 h-7 text-green-400" />
+                    ) : (
+                      <AlertCircle className="w-7 h-7 text-red-400" />
+                    )}
+                    <p>{status.message}</p>
+                  </div>
+                )}
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-black border-t border-gray-900 py-16 px-6">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-5">Future Fix</h3>
+            <p className="text-gray-400 leading-relaxed">
+              Premium laptop repair, motherboard service, data recovery and hardware solutions in Dubai.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="text-lg font-semibold text-white mb-5">Quick Links</h4>
+            <ul className="space-y-3 text-gray-400">
+              <li>
+                <Link href="/" className="hover:text-cyan-400 transition">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="hover:text-cyan-400 transition">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link href="/how-it-works" className="hover:text-cyan-400 transition">
+                  How It Works
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-cyan-400 transition">
+                  About
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-lg font-semibold text-white mb-5">Contact</h4>
+            <ul className="space-y-3 text-gray-400">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-cyan-500 mt-1" />
+                <span>Naif, Deira, Dubai, UAE</span>
+              </li>
+              <li>
+                <a href={WHATSAPP_LINK} className="flex items-center gap-3 hover:text-cyan-400 transition">
+                  <MessageCircle className="w-5 h-5 text-cyan-500" />
+                  {WHATSAPP_NUMBER}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-16 pt-10 border-t border-gray-900 text-center text-sm text-gray-500">
+          © {new Date().getFullYear()} Future Fix. All rights reserved.  
+          <span className="mx-3">•</span>
+          Repair Before You Replace
+        </div>
+      </footer>
+    </div>
+  );
 }
