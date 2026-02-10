@@ -161,7 +161,7 @@ export default function AboutUsPage() {
                 icon: Clock,
                 title: "Fast Dubai Service",
                 description:
-                  "Same-day & next-day options. Free pickup across Dubai + quick diagnostics.",
+                  "Same-day & next-day options. Fast pickup across Dubai + quick diagnostics.",
               },
               {
                 icon: Heart,

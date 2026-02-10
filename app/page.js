@@ -651,8 +651,8 @@ export default function Home() {
   ];
 
   const steps = [
-    { num: "01", title: "Schedule Pickup", desc: "Book online or WhatsApp – free collection across Dubai" },
-    { num: "02", title: "Free Diagnosis", desc: "Detailed inspection + transparent report within 1 hour" },
+    { num: "01", title: "Schedule Pickup", desc: "Book online or WhatsApp – collection across Dubai" },
+    { num: "02", title: "Fast Diagnosis", desc: "Detailed inspection + transparent report within 1 hour" },
     { num: "03", title: "Instant Quote", desc: "Clear fixed pricing – no hidden charges" },
     { num: "04", title: "Repair & Return", desc: "Premium parts + lifetime warranty on repairs" },
   ];
@@ -661,7 +661,7 @@ export default function Home() {
     {
       name: "Essential",
       price: "AED 249",
-      features: ["Screen / keyboard repair", "Battery check & replace", "Free pickup & diagnosis", "90-day warranty"],
+      features: ["Screen / keyboard repair", "Battery check & replace", "Fast pickup & diagnosis", "90-day warranty"],
       popular: false,
     },
     {
@@ -708,7 +708,7 @@ export default function Home() {
             </h1>
 
             <p className="text-xl sm:text-2xl text-gray-300 max-w-xl font-light">
-              Same-day service • Free diagnostics • Lifetime warranty on parts • Premium components only
+              Same-day service • Fast diagnostics • Lifetime warranty on parts • Premium components only
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5">
@@ -716,7 +716,7 @@ export default function Home() {
                 href="#"
                 className="group relative inline-flex items-center justify-center px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-lg font-semibold tracking-wide overflow-hidden hover:scale-[1.03] transition-all duration-300 shadow-xl shadow-cyan-900/30"
               >
-                <span className="relative z-10">Schedule Free Pickup</span>
+                <span className="relative z-10">Schedule Pickup</span>
                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-700"></div>
               </Link>
 
@@ -879,14 +879,14 @@ export default function Home() {
             Get Your Laptop Back to Peak Performance Today
           </h2>
           <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Free pickup anywhere in Dubai • No fix = no fee • Lifetime warranty on repairs
+            Pickup anywhere in Dubai • Special warranty on repairs
           </p>
 
           <Link
             href="#"
             className="inline-flex items-center px-12 py-6 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-xl font-semibold tracking-wide hover:scale-[1.04] transition-all shadow-2xl shadow-cyan-900/40"
           >
-            Schedule Free Pickup Now →
+            Schedule Pickup Now →
           </Link>
         </div>
       </section>

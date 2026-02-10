@@ -1,0 +1,9 @@
+# app/robots.txt
+
+User-agent: *
+Allow: /
+
+
+
+# Sitemap location (very important)
+Sitemap: https://futurefix.ae/sitemap.xml

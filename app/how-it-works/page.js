@@ -302,7 +302,7 @@ export default function HowItWorks() {
     },
     {
       number: '02',
-      title: 'Free Pickup in Dubai',
+      title: 'Fast Pickup in Dubai',
       description:
         'We arrange secure, tracked pickup from your location anywhere in Dubai at a time that suits you.',
       icon: Package,
@@ -446,7 +446,7 @@ export default function HowItWorks() {
                 <ArrowRight className="w-8 h-8 group-hover:translate-x-1.5 transition-transform" />
               </a>
               <p className="mt-6 text-lg text-gray-400">
-                Fast response • Dubai-wide free pickup • Transparent pricing
+                Fast response • Dubai-wide fast pickup • Transparent pricing
               </p>
             </div>
           </div>
@@ -466,7 +466,7 @@ export default function HowItWorks() {
           <div>
             <h4 className="text-lg font-semibold text-white mb-5">Process</h4>
             <ul className="space-y-3 text-gray-400">
-              <li>Free Diagnosis</li>
+              <li>Fast Diagnosis</li>
               <li>Secure Pickup</li>
               <li>Chip-Level Repair</li>
               <li>Quality Testing</li>

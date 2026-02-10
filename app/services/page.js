@@ -531,7 +531,7 @@ export default function ServicesPage() {
           </h2>
 
           <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12">
-            Fast diagnostics • Transparent pricing • Lifetime warranty on many repairs • Free pickup in Dubai
+            Fast diagnostics • Transparent pricing • Lifetime warranty on many repairs • Fast pickup in Dubai
           </p>
 
           <a
