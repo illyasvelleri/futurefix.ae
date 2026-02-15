@@ -312,37 +312,17 @@
 //     );
 // }
 
-// app/services/page.js
 'use client';
 
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import {
-  Cpu,
-  CircuitBoard,
-  HardDrive,
-  Settings,
-  Shield,
-  Activity,
-  Laptop,
-  BarChart3,
-  ArrowRight,
-  MessageCircle,
-  MapPin,
-  ChevronRight,
-} from 'lucide-react';
 
-// ──────────────────────────────────────────────
-// WhatsApp config
-// ──────────────────────────────────────────────
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+971556166465';
+// WhatsApp configuration
+const WHATSAPP_NUMBER = '+971556166465';
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER.replace('+', '')}?text=${encodeURIComponent(
-  'Hello Future Fix, I need information about laptop repair / motherboard repair / data recovery in Dubai'
+  'Hello FutureFix, I need information about laptop repair services in Dubai'
 )}`;
 
-// ──────────────────────────────────────────────
-// Main component
-// ──────────────────────────────────────────────
 export default function ServicesPage() {
   const sectionRefs = useRef([]);
 
@@ -352,11 +332,11 @@ export default function ServicesPage() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('opacity-100', 'translate-y-0');
-            entry.target.classList.remove('opacity-0', 'translate-y-12');
+            entry.target.classList.remove('opacity-0', 'translate-y-8');
           }
         });
       },
-      { threshold: 0.18 }
+      { threshold: 0.15 }
     );
 
     sectionRefs.current.forEach((ref) => ref && observer.observe(ref));
@@ -365,147 +345,222 @@ export default function ServicesPage() {
 
   const services = [
     {
-      icon: CircuitBoard,
       title: 'Chip-Level Motherboard Repair',
-      desc: 'Micro-soldering, BGA reballing, power IC replacement, GPU rework, charging port circuits, PCH / embedded controller fixes — we repair what most shops replace.',
-      tags: ['Micro-Soldering', 'BGA Rework', 'IC Replacement', 'Power Circuit Repair', 'GPU Reballing'],
+      desc: 'Advanced micro-soldering and BGA reballing for complex motherboard failures. We specialize in power IC replacement, GPU rework, charging circuit repair, PCH and embedded controller diagnostics. Professional component-level repair that restores functionality when replacement seems inevitable.',
+      capabilities: [
+        'Micro-soldering & BGA reballing',
+        'Power IC replacement',
+        'GPU rework & reballing',
+        'Charging circuit repair',
+        'PCH & EC diagnostics',
+        'Component-level repair'
+      ]
     },
     {
-      icon: HardDrive,
-      title: 'Hardware Replacement & Upgrades',
-      desc: 'Genuine / high-quality compatible SSD (NVMe/SATA), RAM upgrade, screen replacement, battery replacement, keyboard / trackpad / DC jack / fan / heatsink service.',
-      tags: ['SSD NVMe Upgrade', 'RAM Upgrade', 'Screen Replacement', 'Battery Replacement', 'Keyboard Repair'],
+      title: 'Hardware Component Replacement',
+      desc: 'Premium quality component replacement using original-grade parts. Specialized in display panels, battery modules, keyboard assemblies, and internal hardware components. Every replacement includes thorough testing and quality assurance protocols.',
+      capabilities: [
+        'Display panel replacement',
+        'Battery module installation',
+        'Keyboard assembly repair',
+        'Trackpad replacement',
+        'DC jack & port repair',
+        'Cooling system service'
+      ]
     },
     {
-      icon: Settings,
-      title: 'Software & OS Optimization',
-      desc: 'Clean Windows / macOS reinstall, driver optimization, malware removal, performance tuning, activation fix, data transfer, BIOS update & troubleshooting.',
-      tags: ['Windows Reinstall', 'macOS Clean Install', 'Malware Removal', 'Performance Tuning', 'Data Migration'],
+      title: 'Performance Upgrades',
+      desc: 'Transform your laptop\'s performance with professional hardware upgrades. Expert installation of NVMe SSDs, RAM expansion, and storage solutions. Comprehensive compatibility assessment and optimization for maximum system performance.',
+      capabilities: [
+        'NVMe SSD installation',
+        'SATA SSD upgrade',
+        'RAM expansion service',
+        'Storage migration',
+        'Performance optimization',
+        'Compatibility assessment'
+      ]
     },
     {
-      icon: Activity,
-      title: 'Advanced Laptop Diagnostics',
-      desc: 'Professional tools: thermal camera, power delivery analysis, signal tracing, stress testing, voltage monitoring, component health scan — accurate fault finding.',
-      tags: ['Thermal Camera', 'Power Rail Test', 'Signal Integrity', 'Stress Benchmark', 'Hardware Scan'],
+      title: 'Liquid Damage Restoration',
+      desc: 'Professional ultrasonic cleaning and corrosion treatment for liquid-damaged systems. Advanced board-level inspection, component testing, and precision repair techniques. Comprehensive restoration process with detailed damage assessment.',
+      capabilities: [
+        'Ultrasonic board cleaning',
+        'Corrosion treatment',
+        'Component inspection',
+        'Circuit restoration',
+        'Power delivery repair',
+        'Full system testing'
+      ]
     },
     {
-      icon: Shield,
-      title: 'Business & Corporate Laptop Support',
-      desc: 'Fleet management, preventive maintenance contracts, priority repairs, bulk diagnostics, detailed reporting, dedicated support for offices & companies in Dubai.',
-      tags: ['Fleet Repair', 'Corporate Contracts', 'Preventive Maintenance', 'Priority Service', 'IT Support Dubai'],
+      title: 'Thermal Management & Optimization',
+      desc: 'Advanced thermal management solutions to prevent overheating and improve system longevity. Professional thermal paste application, cooling system maintenance, and airflow optimization. Complete thermal performance analysis and enhancement.',
+      capabilities: [
+        'Thermal paste replacement',
+        'Cooling system cleaning',
+        'Fan & heatsink service',
+        'Thermal optimization',
+        'Temperature monitoring',
+        'Performance tuning'
+      ]
     },
     {
-      icon: Cpu,
-      title: 'Performance & Thermal Optimization',
-      desc: 'Thermal paste replacement, fan/heatsink cleaning, repasting, undervolting, power plan tuning, SSD upgrade consultation — make your laptop run faster & cooler.',
-      tags: ['Repasting', 'Thermal Optimization', 'Fan Cleaning', 'Undervolting', 'Performance Boost'],
+      title: 'Corporate Fleet Management',
+      desc: 'Dedicated support for businesses with comprehensive IT asset repair and maintenance programs. Priority service, bulk diagnostics, detailed reporting, and preventive maintenance contracts tailored for Dubai-based companies and offices.',
+      capabilities: [
+        'Priority repair service',
+        'Fleet diagnostics',
+        'Preventive maintenance',
+        'Contract support',
+        'Detailed reporting',
+        'Asset management'
+      ]
+    }
+  ];
+
+  const processSteps = [
+    {
+      number: '01',
+      title: 'Initial Consultation',
+      description: 'Contact our technical team via WhatsApp or phone for initial assessment and service inquiry.'
     },
+    {
+      number: '02',
+      title: 'Professional Diagnosis',
+      description: 'Comprehensive board-level inspection using advanced diagnostic equipment and tools.'
+    },
+    {
+      number: '03',
+      title: 'Transparent Quote',
+      description: 'Detailed technical assessment with clear explanation of required repairs and timeline.'
+    },
+    {
+      number: '04',
+      title: 'Expert Repair',
+      description: 'Certified technicians perform precision repairs using professional-grade equipment.'
+    },
+    {
+      number: '05',
+      title: 'Quality Testing',
+      description: 'Rigorous testing protocols ensure optimal performance before device return.'
+    },
+    {
+      number: '06',
+      title: 'Warranty & Support',
+      description: 'Extended warranty coverage with ongoing technical support and consultation.'
+    }
+  ];
+
+  const expertise = [
+    { brand: 'Dell', models: 'XPS, Latitude, Precision, Inspiron' },
+    { brand: 'HP', models: 'EliteBook, ProBook, Pavilion, Envy, Spectre' },
+    { brand: 'Lenovo', models: 'ThinkPad, IdeaPad, Yoga, Legion' },
+    { brand: 'Apple', models: 'MacBook Pro, MacBook Air, M1/M2/M3 series' },
+    { brand: 'ASUS', models: 'ZenBook, VivoBook, ROG, TUF Gaming' },
+    { brand: 'Acer', models: 'Swift, Aspire, Predator, Nitro' },
+    { brand: 'MSI', models: 'Prestige, Modern, Gaming series' },
+    { brand: 'Surface', models: 'Surface Laptop, Surface Book, Surface Pro' }
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0e17] text-gray-100 font-sans antialiased">
-      {/* ─── Floating WhatsApp Button ─── */}
+    <div className="bg-white text-gray-900 min-h-screen font-sans antialiased">
+      {/* Floating WhatsApp Button */}
       <a
         href={WHATSAPP_LINK}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 group"
-        aria-label="Contact Future Fix laptop repair on WhatsApp"
+        className="fixed bottom-8 right-8 z-50 group"
+        aria-label="Contact FutureFix on WhatsApp"
       >
         <div className="relative">
-          <div className="w-16 h-16 rounded-full bg-cyan-600 flex items-center justify-center shadow-2xl shadow-cyan-900/50 group-hover:scale-110 transition-transform">
-            <MessageCircle className="w-8 h-8 text-white" />
-          </div>
-          <div className="absolute -top-1 -right-1 bg-cyan-700 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">
-            Chat
+          <div className="w-16 h-16 rounded-full bg-[#0ea5e9] flex items-center justify-center shadow-xl hover:shadow-2xl hover:bg-[#0284c7] transition-all">
+            <svg className="w-9 h-9 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
           </div>
         </div>
       </a>
 
-      {/* ─── Hero ─── */}
-      <section className="relative pt-24 pb-32 md:pb-40 overflow-hidden">
-        {/* Glow background */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-cyan-600/20 rounded-full blur-3xl opacity-40"></div>
-          <div className="absolute -bottom-20 right-0 w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-3xl opacity-30"></div>
-        </div>
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 px-6 lg:px-12 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f0f9ff] via-white to-[#e0f2fe] opacity-50"></div>
+        
+        <div className="relative max-w-7xl mx-auto text-center">
+          <div className="inline-block mb-6">
+            <span className="text-xs lg:text-sm font-semibold tracking-wider text-[#0ea5e9] uppercase">
+              Professional Laptop Services
+            </span>
+          </div>
+          
+          <h1 className="text-5xl lg:text-7xl font-light leading-tight tracking-tight mb-8">
+            Specialized <span className="font-semibold">Repair Services</span>
+            <br />
+            <span className="text-[#0ea5e9]">for Dubai</span>
+          </h1>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-5xl mx-auto text-center space-y-10">
-            <div className="inline-flex items-center gap-3 px-7 py-3.5 bg-cyan-950/50 border border-cyan-800/40 rounded-full text-lg font-semibold text-cyan-400">
-              <Laptop className="w-6 h-6" />
-              Laptop Repair Dubai
-            </div>
+          <p className="text-lg lg:text-xl text-gray-600 font-light leading-relaxed max-w-4xl mx-auto mb-12">
+            Advanced chip-level motherboard repair, component replacement, performance upgrades, 
+            and comprehensive technical solutions for laptops and notebooks
+          </p>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight">
-              Professional Laptop Repair
-              <br />
-              <span className="bg-gradient-to-r from-cyan-400 via-cyan-300 to-blue-500 bg-clip-text text-transparent">
-                Chip-Level • Upgrade • Optimization
-              </span>
-            </h1>
-
-            <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light">
-              Motherboard repair • NVMe / RAM upgrade • screen / battery replacement • thermal optimization • business fleet support — Dubai
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-6 mt-10">
-              <a
-                href={WHATSAPP_LINK}
-                className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-cyan-600 to-blue-700 rounded-2xl text-lg font-semibold shadow-xl shadow-cyan-900/30 hover:shadow-2xl hover:scale-[1.02] transition-all"
-              >
-                <MessageCircle className="w-7 h-7" />
-                Get Expert Advice Now
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={WHATSAPP_LINK}
+              className="inline-flex items-center justify-center px-8 py-4 bg-[#0ea5e9] text-white font-medium rounded-md hover:bg-[#0284c7] transition shadow-lg shadow-[#0ea5e9]/20"
+            >
+              Request Service Consultation
+            </a>
+            
+            <a
+              href="tel:+971556166465"
+              className="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-200 text-gray-700 font-medium rounded-md hover:border-[#0ea5e9] hover:text-[#0ea5e9] transition"
+            >
+              Call Technical Team
+            </a>
           </div>
         </div>
       </section>
 
-      {/* ─── Services Grid ─── */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight">
-              Laptop Repair Services in Dubai
+      {/* Services Grid */}
+      <section className="py-24 lg:py-32 px-6 lg:px-12 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 lg:mb-20">
+            <span className="text-xs lg:text-sm font-semibold tracking-wider text-[#0ea5e9] uppercase">
+              Comprehensive Solutions
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-light tracking-tight mt-4 mb-6">
+              Our <span className="font-semibold">Technical Services</span>
             </h2>
-            <p className="mt-5 text-xl text-gray-400 max-w-3xl mx-auto">
-              From dead motherboard recovery to high-performance upgrades — we fix what others replace.
+            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
+              Professional laptop repair and maintenance services delivered by certified technicians
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7 lg:gap-9">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
             {services.map((service, i) => (
               <div
-                key={service.title}
+                key={i}
                 ref={(el) => (sectionRefs.current[i] = el)}
-                className="group bg-gray-900/40 border border-gray-800 rounded-2xl p-8 hover:border-cyan-700/60 hover:shadow-xl hover:shadow-cyan-950/30 transition-all duration-300 opacity-0 translate-y-12"
-                style={{ transitionDelay: `${i * 90}ms` }}
+                className="bg-white border border-gray-200 rounded-lg p-8 hover:border-[#0ea5e9] hover:shadow-xl transition-all duration-300 opacity-0 translate-y-8"
+                style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <div className="flex items-start gap-5">
-                  <div className="w-14 h-14 bg-cyan-950/50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-900/60 transition-colors">
-                    <service.icon className="w-7 h-7 text-cyan-400" />
-                  </div>
+                <h3 className="text-2xl font-medium mb-4 text-gray-900">
+                  {service.title}
+                </h3>
+                
+                <p className="text-gray-600 leading-relaxed font-light mb-6">
+                  {service.desc}
+                </p>
 
-                  <div>
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">
-                      {service.title}
-                    </h3>
-
-                    <p className="text-gray-300 leading-relaxed mb-6">{service.desc}</p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {service.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1 text-xs font-medium bg-gray-800/80 text-cyan-300 rounded-full border border-cyan-900/30"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                <div className="space-y-2">
+                  {service.capabilities.map((capability, idx) => (
+                    <div key={idx} className="flex items-start">
+                      <svg className="w-5 h-5 text-[#0ea5e9] mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                      </svg>
+                      <span className="text-sm text-gray-700 font-light">{capability}</span>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             ))}
@@ -513,97 +568,162 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* ─── Strong CTA ─── */}
-      <section className="relative py-24 md:py-32 bg-gradient-to-br from-cyan-950/40 via-gray-950 to-blue-950/30">
-        <div className="absolute inset-0 opacity-[0.06]">
-          <div
-            className="w-full h-full"
-            style={{
-              backgroundImage: 'radial-gradient(circle, #0ea5e9 1px, transparent 1px)',
-              backgroundSize: '50px 50px',
-            }}
-          />
-        </div>
+      {/* Process Section */}
+      <section className="py-24 lg:py-32 px-6 lg:px-12 bg-gradient-to-br from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 lg:mb-20">
+            <span className="text-xs lg:text-sm font-semibold tracking-wider text-[#0ea5e9] uppercase">
+              Service Workflow
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-light tracking-tight mt-4">
+              Our <span className="font-semibold">Repair Process</span>
+            </h2>
+          </div>
 
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
-            Need Motherboard Repair or Laptop Upgrade Today?
-          </h2>
-
-          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12">
-            Fast diagnostics • Transparent pricing • Lifetime warranty on many repairs • Fast pickup in Dubai
-          </p>
-
-          <a
-            href={WHATSAPP_LINK}
-            className="group inline-flex items-center gap-4 px-12 py-6 bg-gradient-to-r from-cyan-600 to-blue-700 rounded-3xl text-xl font-bold shadow-2xl shadow-cyan-900/40 hover:shadow-3xl hover:scale-[1.02] transition-all"
-          >
-            <MessageCircle className="w-9 h-9" />
-            WhatsApp Laptop Repair Expert
-            <ArrowRight className="w-8 h-8 group-hover:translate-x-1.5 transition-transform" />
-          </a>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {processSteps.map((step, i) => (
+              <div
+                key={i}
+                className="bg-white border border-gray-200 rounded-lg p-8 hover:border-[#0ea5e9] transition-colors"
+              >
+                <div className="text-5xl font-light text-[#0ea5e9]/20 mb-4">
+                  {step.number}
+                </div>
+                <h3 className="text-xl font-medium mb-3 text-gray-900">
+                  {step.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed font-light">
+                  {step.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ─── Footer ─── */}
-      <footer className="bg-black border-t border-gray-900 py-16 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
-          <div>
-            <h3 className="text-2xl font-bold text-white mb-5">Future Fix</h3>
-            <p className="text-gray-400 leading-relaxed">
-              Professional laptop repair • motherboard repair • data recovery • hardware upgrade • thermal optimization — Dubai
-            </p>
+      {/* Brands & Models */}
+      <section className="py-24 lg:py-32 px-6 lg:px-12 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="text-xs lg:text-sm font-semibold tracking-wider text-[#0ea5e9] uppercase">
+              Technical Expertise
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-light tracking-tight mt-4">
+              Supported <span className="font-semibold">Brands & Models</span>
+            </h2>
           </div>
 
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-5">Services</h4>
-            <ul className="space-y-3 text-gray-400">
-              <li>
-                <Link href="/services" className="hover:text-cyan-400 transition">
-                  Motherboard Repair Dubai
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-cyan-400 transition">
-                  Laptop Screen Replacement
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-cyan-400 transition">
-                  SSD / RAM Upgrade
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="hover:text-cyan-400 transition">
-                  Business Laptop Support
-                </Link>
-              </li>
-            </ul>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {expertise.map((item, i) => (
+              <div
+                key={i}
+                className="bg-white border border-gray-200 rounded-lg p-6 hover:border-[#0ea5e9] hover:shadow-lg transition-all"
+              >
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {item.brand}
+                </h3>
+                <p className="text-sm text-gray-600 font-light">
+                  {item.models}
+                </p>
+              </div>
+            ))}
           </div>
 
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-5">Contact</h4>
-            <ul className="space-y-3 text-gray-400">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-cyan-500 mt-1" />
-                <span>Naif, Deira, Dubai, UAE</span>
-              </li>
-              <li>
-                <a href={WHATSAPP_LINK} className="flex items-center gap-3 hover:text-cyan-400 transition">
-                  <MessageCircle className="w-5 h-5 text-cyan-500" />
-                  {WHATSAPP_NUMBER}
+          <p className="text-center text-gray-600 font-light mt-12 max-w-3xl mx-auto">
+            We service all major laptop brands and models. If your specific model is not listed, 
+            please contact our technical team for compatibility confirmation.
+          </p>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 lg:py-32 px-6 lg:px-12 bg-gradient-to-br from-[#0ea5e9] to-[#0284c7]">
+        <div className="max-w-4xl mx-auto text-center text-white">
+          <h2 className="text-4xl lg:text-5xl font-light mb-6">
+            Ready for <span className="font-semibold">Professional Service?</span>
+          </h2>
+          <p className="text-xl font-light text-white/90 mb-10 max-w-2xl mx-auto">
+            Contact our certified technicians for expert consultation and technical assessment
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={WHATSAPP_LINK}
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#0ea5e9] font-medium rounded-md hover:bg-gray-50 transition shadow-lg"
+            >
+              WhatsApp Consultation
+            </a>
+            <a
+              href="tel:+971556166465"
+              className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-medium rounded-md hover:bg-white/10 transition"
+            >
+              Call Now
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Corporate Services */}
+      <section className="py-24 lg:py-32 px-6 lg:px-12 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <span className="text-xs lg:text-sm font-semibold tracking-wider text-[#0ea5e9] uppercase">
+                Business Solutions
+              </span>
+              <h2 className="text-4xl lg:text-5xl font-light tracking-tight mt-4 mb-6">
+                <span className="font-semibold">Corporate</span> IT Support
+              </h2>
+              <div className="space-y-4 text-gray-600 leading-relaxed font-light">
+                <p>
+                  Comprehensive IT asset management and repair services tailored for businesses, 
+                  corporate offices, and organizations across Dubai.
+                </p>
+                <p>
+                  We provide priority service, bulk diagnostics, preventive maintenance contracts, 
+                  and detailed reporting for companies managing laptop fleets and IT infrastructure.
+                </p>
+                <p>
+                  Our corporate support includes dedicated account management, flexible service 
+                  agreements, and professional consultation for long-term IT asset optimization.
+                </p>
+              </div>
+
+              <div className="mt-8">
+                <a
+                  href={WHATSAPP_LINK}
+                  className="inline-flex items-center justify-center px-8 py-4 bg-[#0ea5e9] text-white font-medium rounded-md hover:bg-[#0284c7] transition shadow-lg shadow-[#0ea5e9]/20"
+                >
+                  Request Corporate Quote
                 </a>
-              </li>
-            </ul>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="bg-white border border-gray-200 rounded-lg p-8">
+                <h3 className="text-xl font-medium mb-3 text-gray-900">Priority Service</h3>
+                <p className="text-gray-600 font-light">
+                  Fast-track repair service with dedicated support and expedited turnaround times for critical business systems.
+                </p>
+              </div>
+              
+              <div className="bg-white border border-gray-200 rounded-lg p-8">
+                <h3 className="text-xl font-medium mb-3 text-gray-900">Fleet Management</h3>
+                <p className="text-gray-600 font-light">
+                  Comprehensive diagnostics and maintenance programs for companies with multiple laptop assets and IT equipment.
+                </p>
+              </div>
+
+              <div className="bg-white border border-gray-200 rounded-lg p-8">
+                <h3 className="text-xl font-medium mb-3 text-gray-900">Contract Support</h3>
+                <p className="text-gray-600 font-light">
+                  Flexible maintenance agreements with preventive care, regular inspections, and ongoing technical consultation.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className="mt-16 pt-10 border-t border-gray-900 text-center text-sm text-gray-500">
-          © {new Date().getFullYear()} Future Fix. All rights reserved.  
-          <span className="mx-3">•</span>
-          Laptop Repair & Motherboard Repair Dubai
-        </div>
-      </footer>
+      </section>
     </div>
   );
 }

@@ -600,213 +600,218 @@
 //   );
 // }
 
-
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
-  const laptopRef = useRef(null);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleMouse = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 35;
-      const y = (e.clientY / window.innerHeight - 0.5) * 25;
-      setMouse({ x, y });
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
     };
-
-    window.addEventListener('mousemove', handleMouse);
-    return () => window.removeEventListener('mousemove', handleMouse);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (!laptopRef.current) return;
-
-    let frame;
-    const animate = () => {
-      const time = Date.now() * 0.001;
-      const floatY = Math.sin(time * 1.2) * 12;
-      laptopRef.current.style.transform = `
-        translate(${mouse.x}px, ${mouse.y * 0.6 + floatY}px)
-        rotateX(${mouse.y * 0.15}deg)
-        rotateY(${mouse.x * -0.2}deg)
-        scale(1.02)
-      `;
-      frame = requestAnimationFrame(animate);
-    };
-    animate();
-
-    return () => cancelAnimationFrame(frame);
-  }, [mouse]);
-
   const services = [
-    { title: "Laptop Repair", desc: "Motherboard, screen, keyboard & port repairs with original-grade parts", icon: "💻" },
-    { title: "Battery Replacement", desc: "Genuine high-capacity batteries – longer life, faster charge", icon: "🔋" },
-    { title: "Data Recovery", desc: "Advanced lab recovery from failed SSDs, RAID, encrypted drives", icon: "💾" },
-    { title: "Hardware Upgrade", desc: "RAM, NVMe SSD, thermal repasting for peak performance", icon: "⚡" },
-    { title: "Liquid Damage Repair", desc: "Ultrasonic cleaning + micro-soldering – high success rate", icon: "🛡️" },
-    { title: "Same-Day Express", desc: "Priority repair – most issues resolved in 4–8 hours", icon: "🚀" },
+    {
+      title: "Chip-Level Motherboard Repair",
+      desc: "Advanced micro-soldering and component-level diagnostics for complex motherboard failures, power issues, and circuit damage."
+    },
+    {
+      title: "Liquid Damage Restoration",
+      desc: "Professional ultrasonic cleaning, corrosion treatment, and precision board-level repair with advanced recovery techniques."
+    },
+    {
+      title: "Data Recovery Services",
+      desc: "Specialized recovery from failed storage devices, corrupted drives, and damaged systems with cleanroom facilities."
+    },
+    {
+      title: "Premium Component Replacement",
+      desc: "Original-grade parts sourcing and installation including displays, batteries, keyboards, and internal components."
+    },
+    {
+      title: "GPU & Graphics Repair",
+      desc: "Dedicated graphics card diagnostics, reflow, reballing, and replacement services for high-performance systems."
+    },
+    {
+      title: "Corporate Fleet Management",
+      desc: "Comprehensive IT asset repair and maintenance programs for businesses with priority service and reporting."
+    }
   ];
 
-  const steps = [
-    { num: "01", title: "Schedule Pickup", desc: "Book online or WhatsApp – collection across Dubai" },
-    { num: "02", title: "Fast Diagnosis", desc: "Detailed inspection + transparent report within 1 hour" },
-    { num: "03", title: "Instant Quote", desc: "Clear fixed pricing – no hidden charges" },
-    { num: "04", title: "Repair & Return", desc: "Premium parts + lifetime warranty on repairs" },
-  ];
-
-  const plans = [
+  const process = [
     {
-      name: "Essential",
-      price: "AED 249",
-      features: ["Screen / keyboard repair", "Battery check & replace", "Fast pickup & diagnosis", "90-day warranty"],
-      popular: false,
+      title: "Professional Diagnosis",
+      desc: "Comprehensive board-level inspection with detailed technical assessment and transparent reporting"
     },
     {
-      name: "Premium",
-      price: "AED 499",
-      features: ["All Essential repairs", "Data recovery (up to 1TB)", "Hardware upgrade support", "Same-day service option", "Lifetime warranty on parts"],
-      popular: true,
+      title: "Expert Repair",
+      desc: "Certified technicians perform precision repairs using advanced micro-soldering equipment"
     },
     {
-      name: "Corporate",
-      price: "Custom",
-      features: ["Priority on-site service", "Bulk / fleet discounts", "Dedicated account manager", "SLA & reporting", "Monthly maintenance plans"],
-      popular: false,
+      title: "Quality Assurance",
+      desc: "Rigorous testing protocols ensure optimal performance before device return"
     },
+    {
+      title: "Warranty & Support",
+      desc: "Extended warranty coverage on all repairs with ongoing technical support"
+    }
   ];
 
   const testimonials = [
-    { name: "Ahmed Al Mansoori", role: "CEO, Tech Startup", text: "Fixed 14 MacBooks in one weekend – professional, discreet and very fast.", rating: 5 },
-    { name: "Layla Khalid", role: "Interior Designer", text: "Liquid damaged MacBook Pro fully recovered – all client files intact. Exceptional service.", rating: 5 },
-    { name: "James Carter", role: "Expc Finance Director", text: "Same-day screen replacement on ThinkPad while I waited in JLT. Premium experience.", rating: 5 },
-    { name: "Sara Al Hashmi", role: "Content Creator", text: "Upgraded RAM + SSD – laptop now flies. Honest advice and clean work.", rating: 5 },
+    {
+      name: "Mohammed Al Hashimi",
+      role: "IT Director, Construction Firm",
+      text: "FutureFix recovered critical project data from a liquid-damaged laptop. Their chip-level expertise is unmatched in Dubai."
+    },
+    {
+      name: "Sarah Mitchell",
+      role: "Architect",
+      text: "Professional service from start to finish. They repaired my MacBook Pro's logic board when others said it was beyond repair."
+    },
+    {
+      name: "Khalid Rahman",
+      role: "Business Owner",
+      text: "Excellent technical knowledge and transparent communication. They've been servicing our company laptops for two years."
+    },
+    {
+      name: "Elena Popov",
+      role: "Creative Director",
+      text: "Saved months of work from a failed SSD. Their data recovery capabilities and professionalism exceeded expectations."
+    }
+  ];
+
+  const stats = [
+    { value: "15+", label: "Years Experience" },
+    { value: "25,000+", label: "Devices Repaired" },
+    { value: "98.5%", label: "Success Rate" },
+    { value: "4000+", label: "Clients" }
   ];
 
   return (
-    <div className="bg-[#0a0e17] text-gray-100 min-h-screen font-sans">
-      {/* Hero */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-5 sm:px-10 lg:px-16 pt-20 pb-32">
-        {/* Glow background */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-cyan-600/20 rounded-full blur-3xl opacity-40"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-3xl opacity-30"></div>
-        </div>
+    <div className="bg-white text-gray-900 min-h-screen font-sans antialiased">
 
-        <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="space-y-8 lg:space-y-12">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none">
-              Fast, Reliable
-              <br />
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                Laptop Repair
-              </span>
-              <br />
-              in Dubai
-            </h1>
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 px-6 lg:px-12 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f0f9ff] via-white to-[#e0f2fe] opacity-60"></div>
 
-            <p className="text-xl sm:text-2xl text-gray-300 max-w-xl font-light">
-              Same-day service • Fast diagnostics • Lifetime warranty on parts • Premium components only
-            </p>
+        <div className="relative max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <div className="inline-block">
+                <span className="text-xs lg:text-sm font-semibold tracking-wider text-[#0ea5e9] uppercase">
+                  Professional Chip-Level Repair
+                </span>
+              </div>
 
-            <div className="flex flex-col sm:flex-row gap-5">
-              <Link
-                href="#"
-                className="group relative inline-flex items-center justify-center px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-lg font-semibold tracking-wide overflow-hidden hover:scale-[1.03] transition-all duration-300 shadow-xl shadow-cyan-900/30"
-              >
-                <span className="relative z-10">Schedule Pickup</span>
-                <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-700"></div>
-              </Link>
+              <h1 className="text-5xl lg:text-7xl font-light leading-tight tracking-tight">
+                Advanced Laptop
+                <br />
+                <span className="font-semibold">Repair Services</span>
+                <br />
+                <span className="text-[#0ea5e9]">in Dubai</span>
+              </h1>
 
-              <Link
-                href="#"
-                className="inline-flex items-center justify-center px-10 py-5 border border-cyan-700/50 hover:border-cyan-400 rounded-full text-lg font-medium transition-colors"
-              >
-                WhatsApp Now
-              </Link>
+              <p className="text-lg lg:text-xl text-gray-600 font-light leading-relaxed max-w-xl">
+                Specialized motherboard diagnostics, micro-soldering, and component-level repair by certified technicians with over 15 years of experience.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Link
+                  href="#contact"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-[#0ea5e9] text-white font-medium rounded-md hover:bg-[#0284c7] transition shadow-lg shadow-[#0ea5e9]/20"
+                >
+                  Schedule Repair
+                </Link>
+
+                <Link
+                  href="https://wa.me/971501234567"
+                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-200 text-gray-700 font-medium rounded-md hover:border-[#0ea5e9] hover:text-[#0ea5e9] transition"
+                >
+                  WhatsApp Inquiry
+                </Link>
+              </div>
+
+              <div className="flex items-center space-x-6 pt-6">
+                <Link href="https://facebook.com/futurefix.ae" target="_blank" className="text-gray-400 hover:text-[#0ea5e9] transition">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                </Link>
+                <Link href="https://instagram.com/futurefix.ae" target="_blank" className="text-gray-400 hover:text-[#0ea5e9] transition">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                  </svg>
+                </Link>
+              </div>
             </div>
-          </div>
 
-          {/* Floating laptop illustration container */}
-          <div className="hidden lg:block relative h-[520px]">
-            <div
-              ref={laptopRef}
-              className="absolute inset-0 flex items-center justify-center transition-transform duration-200 ease-out will-change-transform"
-            >
-              {/* You can replace this SVG with a real premium laptop PNG with transparent background */}
-              <svg
-                className="w-[90%] max-w-[620px] drop-shadow-2xl"
-                viewBox="0 0 700 480"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {/* Simplified premium laptop shape */}
-                <rect x="80" y="60" width="540" height="320" rx="24" fill="#111827" stroke="#334155" strokeWidth="4"/>
-                <rect x="100" y="80" width="500" height="280" rx="12" fill="#0f172a"/>
-                {/* Screen glow */}
-                <rect x="110" y="90" width="480" height="260" rx="8" fill="url(#screenGlow)" opacity="0.7"/>
-                {/* Keyboard area */}
-                <rect x="80" y="380" width="540" height="60" rx="12" fill="#0f172a" stroke="#334155" strokeWidth="3"/>
-                {/* Trackpad */}
-                <rect x="260" y="400" width="180" height="20" rx="6" fill="#1e293b"/>
-                {/* Logo / camera */}
-                <circle cx="350" cy="120" r="8" fill="#00f0ff" opacity="0.4"/>
-                <defs>
-                  <radialGradient id="screenGlow" cx="50%" cy="30%">
-                    <stop offset="0%" stopColor="#00f0ff" stopOpacity="0.25"/>
-                    <stop offset="100%" stopColor="#0f172a" stopOpacity="0"/>
-                  </radialGradient>
-                </defs>
-              </svg>
+            <div className="hidden lg:block">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0ea5e9]/10 to-[#0284c7]/10 rounded-2xl transform rotate-3"></div>
+                <div className="relative bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
+                  <img
+                    src="/hero_01.png"
+                    alt="Professional laptop repair workspace with advanced diagnostic equipment"
+                    className="rounded-lg w-full h-auto"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="border-t border-gray-800/50 py-16 px-5 sm:px-10 lg:px-16 bg-gradient-to-b from-[#0a0e17] to-[#0d1320]">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-10 text-center">
-          {[
-            { num: "18,500+", label: "Devices Repaired" },
-            { num: "98.7%", label: "Success Rate" },
-            { num: "< 8 hrs", label: "Avg. Turnaround" },
-            { num: "240+", label: "Corporate Clients" },
-          ].map((stat, i) => (
-            <div key={i}>
-              <div className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-2">
-                {stat.num}
+      <section className="py-16 px-6 lg:px-12 bg-gradient-to-br from-[#0ea5e9] to-[#0284c7]">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            {stats.map((stat, i) => (
+              <div key={i} className="text-center">
+                <div className="text-4xl lg:text-5xl font-light text-white mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-sm lg:text-base text-white/90 font-light uppercase tracking-wider">
+                  {stat.label}
+                </div>
               </div>
-              <div className="text-gray-400 text-sm lg:text-base uppercase tracking-wider font-medium">
-                {stat.label}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Services */}
-      <section id="services" className="py-24 lg:py-32 px-5 sm:px-10 lg:px-16">
+      <section id="services" className="py-24 lg:py-32 px-6 lg:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="text-cyan-400 text-sm lg:text-base font-semibold tracking-widest uppercase mb-4">
-              Professional Services
-            </div>
-            <h2 className="text-4xl lg:text-6xl font-extrabold tracking-tight">
-              Premium Repair Solutions
+          <div className="text-center mb-16 lg:mb-20">
+            <span className="text-xs lg:text-sm font-semibold tracking-wider text-[#0ea5e9] uppercase">
+              Specialized Services
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-light tracking-tight mt-4 mb-6">
+              Expert <span className="font-semibold">Technical Solutions</span>
             </h2>
+            <p className="text-lg text-gray-600 font-light max-w-3xl mx-auto">
+              Comprehensive repair services powered by advanced diagnostics and certified expertise
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((s, i) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            {services.map((service, i) => (
               <div
                 key={i}
-                className="group bg-gray-900/40 border border-gray-800 hover:border-cyan-700/50 rounded-2xl p-8 transition-all duration-400 hover:shadow-xl hover:shadow-cyan-950/30"
+                className="group bg-white border border-gray-200 rounded-lg p-8 hover:border-[#0ea5e9] hover:shadow-xl transition-all duration-300"
               >
-                <div className="text-5xl mb-6 opacity-90 group-hover:opacity-100 transition-opacity">{s.icon}</div>
-                <h3 className="text-xl lg:text-2xl font-bold mb-3">{s.title}</h3>
-                <p className="text-gray-400 text-base leading-relaxed">{s.desc}</p>
+                <h3 className="text-xl lg:text-2xl font-medium mb-4 text-gray-900 group-hover:text-[#0ea5e9] transition">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed font-light">
+                  {service.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -814,27 +819,31 @@ export default function Home() {
       </section>
 
       {/* Process */}
-      <section className="bg-gradient-to-b from-[#0d1320] to-[#0a0e17] py-24 lg:py-32 px-5 sm:px-10 lg:px-16 border-t border-gray-800/40">
+      <section id="process" className="py-24 lg:py-32 px-6 lg:px-12 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="text-cyan-400 text-sm lg:text-base font-semibold tracking-widest uppercase mb-4">
-              How It Works
-            </div>
-            <h2 className="text-4xl lg:text-6xl font-extrabold tracking-tight">
-              Simple • Fast • Transparent
+          <div className="text-center mb-16 lg:mb-20">
+            <span className="text-xs lg:text-sm font-semibold tracking-wider text-[#0ea5e9] uppercase">
+              Our Process
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-light tracking-tight mt-4">
+              Professional <span className="font-semibold">Service Workflow</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8 lg:gap-6">
-            {steps.map((step, i) => (
-              <div key={i} className="relative text-center">
-                <div className="text-7xl lg:text-8xl font-black text-cyan-900/30 mb-6">{step.num}</div>
-                <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
-                <p className="text-gray-400 text-base">{step.desc}</p>
-
-                {i < 3 && (
-                  <div className="hidden md:block absolute top-10 -right-4 w-8 h-0.5 bg-gradient-to-r from-cyan-700 to-transparent"></div>
-                )}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {process.map((step, i) => (
+              <div key={i} className="relative">
+                <div className="bg-white border border-gray-200 rounded-lg p-8 h-full hover:border-[#0ea5e9] transition-colors">
+                  <div className="text-6xl font-light text-[#0ea5e9]/20 mb-6">
+                    {String(i + 1).padStart(2, '0')}
+                  </div>
+                  <h3 className="text-xl font-medium mb-3 text-gray-900">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed font-light">
+                    {step.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -842,100 +851,117 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="bg-gradient-to-b from-[#0a0e17] to-[#0d1320] py-24 lg:py-32 px-5 sm:px-10 lg:px-16 border-t border-gray-800/40">
+      <section className="py-24 lg:py-32 px-6 lg:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="text-cyan-400 text-sm lg:text-base font-semibold tracking-widest uppercase mb-4">
-              Client Experiences
-            </div>
-            <h2 className="text-4xl lg:text-6xl font-extrabold tracking-tight">
-              Trusted in Dubai
+          <div className="text-center mb-16 lg:mb-20">
+            <span className="text-xs lg:text-sm font-semibold tracking-wider text-[#0ea5e9] uppercase">
+              Client Testimonials
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-light tracking-tight mt-4">
+              Trusted by <span className="font-semibold">Professionals</span>
             </h2>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {testimonials.map((t, i) => (
-              <div key={i} className="bg-gray-900/40 border border-gray-800 rounded-2xl p-7 hover:border-cyan-800/50 transition-colors">
+            {testimonials.map((testimonial, i) => (
+              <div
+                key={i}
+                className="bg-white border border-gray-200 rounded-lg p-8 hover:border-[#0ea5e9] hover:shadow-lg transition-all"
+              >
                 <div className="flex mb-4">
-                  {[...Array(t.rating)].map((_, j) => (
-                    <svg key={j} className="w-5 h-5 text-cyan-500" fill="currentColor" viewBox="0 0 20 20">
+                  {[...Array(5)].map((_, j) => (
+                    <svg key={j} className="w-4 h-4 text-[#0ea5e9]" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                   ))}
                 </div>
-                <p className="text-gray-300 mb-6 leading-relaxed">"{t.text}"</p>
-                <div className="font-medium">{t.name}</div>
-                <div className="text-sm text-gray-500">{t.role}</div>
+                <p className="text-gray-700 mb-6 leading-relaxed font-light">
+                  "{testimonial.text}"
+                </p>
+                <div className="border-t border-gray-100 pt-4">
+                  <div className="font-medium text-gray-900">{testimonial.name}</div>
+                  <div className="text-sm text-gray-500 font-light">{testimonial.role}</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-24 lg:py-32 px-5 sm:px-10 lg:px-16 bg-gradient-to-br from-cyan-950/30 via-gray-950 to-blue-950/20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-6xl font-extrabold tracking-tight mb-6">
-            Get Your Laptop Back to Peak Performance Today
+      {/* CTA Section */}
+      <section id="contact" className="py-24 lg:py-32 px-6 lg:px-12 bg-gradient-to-br from-[#0ea5e9] to-[#0284c7]">
+        <div className="max-w-4xl mx-auto text-center text-white">
+          <h2 className="text-4xl lg:text-5xl font-light mb-6">
+            Ready to <span className="font-semibold">Restore Your Device?</span>
           </h2>
-          <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Pickup anywhere in Dubai • Special warranty on repairs
+          <p className="text-xl font-light text-white/90 mb-10 max-w-2xl mx-auto">
+            Contact our technical team for professional diagnostics and repair consultation
           </p>
 
-          <Link
-            href="#"
-            className="inline-flex items-center px-12 py-6 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-xl font-semibold tracking-wide hover:scale-[1.04] transition-all shadow-2xl shadow-cyan-900/40"
-          >
-            Schedule Pickup Now →
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="tel:+971501234567"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#0ea5e9] font-medium rounded-md hover:bg-gray-50 transition shadow-lg"
+            >
+              Call Now
+            </Link>
+            <Link
+              href="https://wa.me/971501234567"
+              className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-medium rounded-md hover:bg-white/10 transition"
+            >
+              WhatsApp Us
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-black border-t border-gray-900 py-16 px-5 sm:px-10 lg:px-16">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
-          <div>
-            <div className="text-2xl font-bold mb-4">
-              Elite<span className="text-cyan-500">Fix</span> Dubai
+      {/* About Section */}
+      <section id="about" className="py-24 lg:py-32 px-6 lg:px-12 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <span className="text-xs lg:text-sm font-semibold tracking-wider text-[#0ea5e9] uppercase">
+                About FutureFix
+              </span>
+              <h2 className="text-4xl lg:text-5xl font-light tracking-tight mt-4 mb-6">
+                <span className="font-semibold">Technical Excellence</span> in Dubai
+              </h2>
+              <div className="space-y-4 text-gray-600 leading-relaxed font-light">
+                <p>
+                  FutureFix specializes in advanced chip-level laptop repair, offering professional diagnostic and restoration services for businesses and individuals across Dubai.
+                </p>
+                <p>
+                  Our certified technicians utilize state-of-the-art micro-soldering equipment and diagnostic tools to resolve complex motherboard failures, liquid damage, and component-level issues that standard repair centers cannot address.
+                </p>
+                <p>
+                  With over 15 years of combined experience and a commitment to transparent service, we have established ourselves as Dubai's trusted partner for critical device recovery and professional IT asset management.
+                </p>
+              </div>
             </div>
-            <p className="text-gray-500 text-sm">
-              Premium laptop & MacBook repair services in Dubai since 2018.
-            </p>
-          </div>
 
-          <div>
-            <h4 className="font-semibold mb-4 uppercase text-sm tracking-wider text-gray-400">Services</h4>
-            <ul className="space-y-2 text-gray-500 text-sm">
-              <li><Link href="#" className="hover:text-cyan-400 transition">Laptop Repair</Link></li>
-              <li><Link href="#" className="hover:text-cyan-400 transition">Data Recovery</Link></li>
-              <li><Link href="#" className="hover:text-cyan-400 transition">Battery Replacement</Link></li>
-              <li><Link href="#" className="hover:text-cyan-400 transition">Express Service</Link></li>
-            </ul>
-          </div>
+            <div className="space-y-6">
+              <div className="bg-white border border-gray-200 rounded-lg p-8">
+                <h3 className="text-xl font-medium mb-2 text-gray-900">Service Locations</h3>
+                <p className="text-gray-600 font-light">Dubai • Business Bay • Jumeirah Lakes Towers</p>
+              </div>
 
-          <div>
-            <h4 className="font-semibold mb-4 uppercase text-sm tracking-wider text-gray-400">Company</h4>
-            <ul className="space-y-2 text-gray-500 text-sm">
-              <li><Link href="#" className="hover:text-cyan-400 transition">About</Link></li>
-              <li><Link href="#" className="hover:text-cyan-400 transition">Contact</Link></li>
-              <li><Link href="#" className="hover:text-cyan-400 transition">Warranty Policy</Link></li>
-            </ul>
-          </div>
+              <div className="bg-white border border-gray-200 rounded-lg p-8">
+                <h3 className="text-xl font-medium mb-2 text-gray-900">Operating Hours</h3>
+                <p className="text-gray-600 font-light">Saturday – Thursday: 9:00 AM – 7:00 PM<br />Friday: Closed</p>
+              </div>
 
-          <div>
-            <h4 className="font-semibold mb-4 uppercase text-sm tracking-wider text-gray-400">Contact</h4>
-            <p className="text-gray-500 text-sm">
-              WhatsApp: +971 50 123 4567<br />
-              Email: support@elitefix.ae<br />
-              Dubai – JLT & Business Bay
-            </p>
+              <div className="bg-white border border-gray-200 rounded-lg p-8">
+                <h3 className="text-xl font-medium mb-2 text-gray-900">Contact Information</h3>
+                <p className="text-gray-600 font-light">
+                  Email: info@futurefix.ae<br />
+                  Phone: +971 50 123 4567<br />
+                  WhatsApp: +971 50 123 4567
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className="mt-16 pt-8 border-t border-gray-900 text-center text-sm text-gray-600">
-          © 2026 EliteFix Dubai. All rights reserved.
-        </div>
-      </footer>
+      </section>
     </div>
   );
 }
